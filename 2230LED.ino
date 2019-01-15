@@ -10,7 +10,6 @@
 CRGB leds[LEDS];
 
 void setup() {
-  Serial.begin(9600);
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, LEDS);
 }
 
@@ -26,12 +25,6 @@ void loop() {
   r=analogRead(R_PIN)/4;
   g=analogRead(G_PIN)/4;
   b=analogRead(B_PIN)/4;
-  Serial.print(r);
-  Serial.print(" ");
-  Serial.print(g);
-  Serial.print(" ");
-  Serial.print(b);
-  Serial.println();
   leds[0] = CRGB(r,g,b);
   FastLED.show();
   delay(50);
