@@ -1,29 +1,38 @@
 #include <FastLED.h>
 
-#define PIN 3
-#define LEDS 60
+#define LED_PIN 3
+
+#define R_PIN A0
+#define G_PIN A1
+#define B_PIN A2
+
+#define LEDS 69
 CRGB leds[LEDS];
 
 void setup() {
-  Serial.begin(115200);
-  FastLED.addLeds<WS2812, PIN, GRB>(leds, LEDS);
-  Serial.println("Arduino Init");
+  Serial.begin(9600);
+  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, LEDS);
 }
 
 long led;
-String color;
+int r,g,b;
 void loop() {
-  color = Serial.readString();
-  if (color != "") {
-    Serial.println(color);
-    CRGB tempColor = leds[0];
-    for (led = 1; led < LEDS; led++) {
-      CRGB tempCurrent = leds[led];
-      leds[led] = tempColor;
-      tempColor = tempCurrent;
-    }
-    leds[0] = strtol(&color[0], NULL, 16);
-    FastLED.show();
+  CRGB tempColor = leds[0];
+  for (led = 1; led < LEDS; led++) {
+    CRGB tempCurrent = leds[led];
+    leds[led] = tempColor;
+    tempColor = tempCurrent;
   }
-  delay(10);
+  r=analogRead(R_PIN)/4;
+  g=analogRead(G_PIN)/4;
+  b=analogRead(B_PIN)/4;
+  Serial.print(r);
+  Serial.print(" ");
+  Serial.print(g);
+  Serial.print(" ");
+  Serial.print(b);
+  Serial.println();
+  leds[0] = CRGB(r,g,b);
+  FastLED.show();
+  delay(50);
 }
