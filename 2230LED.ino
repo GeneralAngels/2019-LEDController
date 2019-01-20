@@ -2,30 +2,29 @@
 
 #define LED_PIN 3
 
-#define R_PIN A0
-#define G_PIN A1
-#define B_PIN A2
+#define R_PIN 4
+#define G_PIN 5
+#define B_PIN 6
 
 #define LEDS 69
 CRGB leds[LEDS];
+long led;
+byte buffer[3];
 
 void setup() {
+  Serial.begin(9600); 
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, LEDS);
 }
 
-long led;
-int r,g,b;
 void loop() {
+  Serial.readBytes(buffer,3);
   CRGB tempColor = leds[0];
   for (led = 1; led < LEDS; led++) {
     CRGB tempCurrent = leds[led];
     leds[led] = tempColor;
     tempColor = tempCurrent;
   }
-  r=analogRead(R_PIN)/4;
-  g=analogRead(G_PIN)/4;
-  b=analogRead(B_PIN)/4;
-  leds[0] = CRGB(r,g,b);
+  leds[0] = CRGB(buffer[0], buffer[1], buffer[2]);
   FastLED.show();
-  delay(50);
+  delay(10);
 }
