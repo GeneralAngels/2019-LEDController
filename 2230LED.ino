@@ -1,12 +1,8 @@
 #include <FastLED.h>
 
 #define LED_PIN 3
-
-#define R_PIN 4
-#define G_PIN 5
-#define B_PIN 6
-
 #define LEDS 69
+
 CRGB leds[LEDS];
 long led;
 byte buffer[3];
