@@ -20,7 +20,7 @@ void loop() {
     leds[led] = tempColor;
     tempColor = tempCurrent;
   }
-  leds[0] = CRGB(buffer[0], buffer[1], buffer[2]);
+  leds[0] = CRGB(buffer[2], buffer[1], buffer[0]);
   FastLED.show();
   delay(10);
 }
