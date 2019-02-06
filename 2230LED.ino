@@ -2,6 +2,7 @@
 
 #define LED_PIN 3
 #define LEDS 69
+#define LOOP_DELAY 10 //100Hz
 
 CRGB leds[LEDS];
 long led;
@@ -20,7 +21,8 @@ void loop() {
     leds[led] = tempColor;
     tempColor = tempCurrent;
   }
+  // BGR Mode
   leds[0] = CRGB(buffer[2], buffer[1], buffer[0]);
   FastLED.show();
-  delay(10);
+  delay(LOOP_DELAY);
 }
