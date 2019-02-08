@@ -18,9 +18,9 @@ void loop() {
   Serial.readBytes(buffer, 3);
   // Check if need to clear
   if (buffer[2] == -1 && buffer[1] == -1 && buffer[0] == -1) {
-    tempColor = CRGB(0, 0, 0);
+    color = CRGB(0, 0, 0);
     for (led = 0; led < LEDS; led++) {
-      leds[led] = tempColor;
+      leds[led] = color;
     }
   } else {
     color = leds[0];
