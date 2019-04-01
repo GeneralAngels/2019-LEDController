@@ -1,8 +1,8 @@
 #include <FastLED.h>
 
 #define LED_PIN 3
-#define LEDS 55
-#define LOOP_DELAY 20 //50Hz
+#define LEDS 38
+#define LOOP_DELAY 50 //50Hz
 
 CRGB leds[LEDS];
 CRGB color, current;
@@ -16,18 +16,19 @@ void setup() {
 
 void loop() {
   Serial.readBytes(buffer, 5);
-  if ((int)buffer[1] > 0) {
-    if ((int)buffer[0] == 0) {
-      for (led = 0; led < (int)buffer[1]; led++) {
-        leds[led] = CRGB(buffer[4], buffer[3], buffer[2]);
+  if (buffer[1] > 0) {
+    color = CRGB(buffer[4], buffer[3], buffer[2]);
+    if (buffer[0] == 0) {
+      for (led = 0; led < buffer[1]; led++) {
+        leds[led] = color;
       }
     } else {
-      for (led = LEDS - 1; led > LEDS - (int)buffer[1] - 1; led--) {
-        leds[led] = CRGB(buffer[4], buffer[3], buffer[2]);
+      for (led = LEDS - 1; led > LEDS - buffer[1] - 1; led--) {
+        leds[led] = color;
       }
     }
   } else {
-    if ((int)buffer[0] == 0) {
+    if (buffer[0] == 0) {
       color = leds[0];
       for (led = 1; led < LEDS; led++) {
         current = leds[led];
@@ -48,5 +49,4 @@ void loop() {
     }
   }
   FastLED.show();
-  delay(LOOP_DELAY);
 }
